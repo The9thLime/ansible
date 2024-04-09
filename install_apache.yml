@@ -18,7 +18,7 @@
       name: php
 
   - name: Enable and start httpd
-    systemd:
+    service:
       name: httpd
       enabled: true
       state: started
