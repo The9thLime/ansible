@@ -4,11 +4,25 @@
   become: true
   tasks:
 
-  - name: update dnf repo
+  - name: Update DNF repo
     dnf:
       update_cache: true
       
-  - name: install apache2 package
+  - name: Install apache
     dnf: 
-      name: apache2
+      name: httpd
       state: latest
+
+  - name: Enable and start httpd
+    systemd:
+      name: httpd
+      enabled: true
+      state: started
+
+  - name: Test Apache 
+    command: httpd -v
+    register: apache_version
+
+  - name: Output apache apache_version
+    debug:
+      msg: "Apache version is {{apache_version}}"
