@@ -16,6 +16,7 @@
   - name: Add php package to apache
     dnf:
       name: php
+      state: latest
 
   - name: Enable and start httpd
     service:
