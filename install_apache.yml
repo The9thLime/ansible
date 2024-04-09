@@ -4,18 +4,15 @@
   become: true
   tasks:
 
-  - name: Update DNF repo
-    dnf:
+  - name: Update DNF cache
+    package:
       update_cache: true
       
-  - name: Install apache
-    dnf: 
-      name: httpd
-      state: latest
-    
-  - name: Add php package to apache
-    dnf:
-      name: php
+  - name: Install apache and php
+    package: 
+      name:
+        - httpd
+        - php
       state: latest
 
   - name: Enable and start httpd
