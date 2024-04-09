@@ -12,6 +12,10 @@
     dnf: 
       name: httpd
       state: latest
+    
+  - name: Add php package to apache
+    dnf:
+      name: php
 
   - name: Enable and start httpd
     systemd:
@@ -25,4 +29,4 @@
 
   - name: Output apache apache_version
     debug:
-      msg: "Apache version is {{apache_version}}"
+      msg: "Apache version is {{ apache_version.stdout }}"
