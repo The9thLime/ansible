@@ -48,14 +48,14 @@
   tasks:
 
   - name: Install mariadb package (Debian family)
-    package:
+    apt:
       name: mariadb-server
       state: latest
     when: ansible_os_family == 'Debian'
 
   - name: Install mariadb package (RedHat family)
-    package:
-      name: mariadb-server
+    dnf:
+      name: mariadb
       state: latest
     when: ansible_os_family == 'RedHat'  
 
