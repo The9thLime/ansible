@@ -8,8 +8,6 @@
     package:
       update_cache: true
       update_only: true
-    when: ansible_os_family == 'RedHat'
-
 
 - hosts: web_servers
   become: true
@@ -18,7 +16,7 @@
   - name: Install apache and php
     package: 
       name:
-        - httpd
+        - "{{ 'httpd' if ansible_os_family == 'RedHat' else 'apache2' }}"
         - php
       state: latest
     when: ansible_os_family == 'RedHat'
