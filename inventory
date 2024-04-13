@@ -1,3 +1,5 @@
 [web_servers]
 43.204.150.202 ansible_user=ec2-user
+
+[db_servers]
 13.127.237.39 ansible_user=ec2-user
