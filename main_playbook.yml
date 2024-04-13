@@ -54,8 +54,8 @@
     when: ansible_os_family == 'Debian'
 
   - name: Install mariadb package (RedHat family)
-    dnf:
-      name: mariadb
+    yum:
+      name: mariadb-server
       state: latest
     when: ansible_os_family == 'RedHat'  
 
