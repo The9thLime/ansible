@@ -2,7 +2,7 @@
 
 - hosts: all
   become: true
-  tasks::
+  tasks:
 
   - name: Update package cache
     tags: always
@@ -16,7 +16,7 @@
   tasks:
 
   - name: Install apache/httpd and php
-    tags: httpd, apache, php, redhat
+    tags: httpd,apache,php,redhat
     package: 
       name:
         - "{{ 'httpd' if ansible_os_family == 'RedHat' else 'apache2' }}"
@@ -25,26 +25,26 @@
     when: ansible_os_family == 'RedHat'
 
   - name: Create PHP info file
-    tags: copy, info, php
+    tags: copy,info,php
     copy:
         content: <?php phpinfo(); ?>
         dest: /var/www/html/info.php
 
   - name: Enable and start httpd
-    tags: httpd, apache, service
+    tags: httpd,apache,service
     service:
       name: httpd
       enabled: true
       state: started
 
   - name: Test Apache 
-    tags: httpd, apache, test
+    tags: httpd,apache,test
     command: httpd -v
     register: apache_version
     when: ansible_os_family == 'RedHat'
     
   - name: Output apache apache_version
-    tags: httpd, apache, version
+    tags: httpd,apache,version
     debug:
       msg: "Apache version is {{ apache_version.stdout }}"
 
@@ -54,32 +54,32 @@
   tasks:
 
   - name: Install mariadb package (Debian family)
-    tags: mariadb, db, debian
+    tags: mariadb,db,debian
     apt:
       name: mariadb-server
       state: latest
     when: ansible_os_family == 'Debian'
 
   - name: Install mariadb package (RedHat family)
-    tags: mariadb, db, redhat
+    tags: mariadb,db,redhat
     yum:
       name: mariadb-server
       state: latest
     when: ansible_os_family == 'RedHat'  
 
   - name: Enable and start mariadb
-    tags: mariadb, db, service
+    tags: mariadb,db,service
     service:
       name: mysqld
       enabled: true
       state: started
 
   - name: Test MySQL
-    tags: mariadb, db, test
+    tags: mariadb,db,test
     command: mysql --version
     register: mysql_version
 
   - name: Output MySQL version
-    tags: mariadb, db, version
+    tags: mariadb,db,version
     debug:
       msg: "MySQL version is {{ mysql_version.stdout }}"
