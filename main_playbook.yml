@@ -2,7 +2,7 @@
 
 - hosts: all
   become: true
-  tasks:
+  pre_tasks:
 
   - name: Update package cache
     package:
@@ -47,12 +47,19 @@
   become: true
   tasks:
 
-  - name: Install MySQL
+  - name: Install mariadb package (Debian family)
     package:
-      name: mysql-server
+      name: mariadb-server
       state: latest
+    when: ansible_os_family == 'Debian'
 
-  - name: Enable and start MySQL
+  - name: Install mariadb package (RedHat family)
+    package:
+      name: mariadb
+      state: latest
+    when: ansible_os_family == 'RedHat'  
+
+  - name: Enable and start mariadb
     service:
       name: mysqld
       enabled: true
