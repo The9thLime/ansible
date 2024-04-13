@@ -2,7 +2,7 @@
 
 - hosts: all
   become: true
-  pre_tasks:
+  tasks::
 
   - name: Update package cache
     tags: always
@@ -44,7 +44,7 @@
     when: ansible_os_family == 'RedHat'
     
   - name: Output apache apache_version
-    tags: httpd, apache, service
+    tags: httpd, apache, version
     debug:
       msg: "Apache version is {{ apache_version.stdout }}"
 
@@ -80,6 +80,6 @@
     register: mysql_version
 
   - name: Output MySQL version
-    tags: mariadb, db, service
+    tags: mariadb, db, version
     debug:
       msg: "MySQL version is {{ mysql_version.stdout }}"
