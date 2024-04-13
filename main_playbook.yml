@@ -8,8 +8,9 @@
     package:
       update_cache: true
       update_only: true
+    when: ansible_os_family == 'RedHat'
 
-      
+
 - hosts: web_servers
   become: true
   tasks:
@@ -20,6 +21,12 @@
         - httpd
         - php
       state: latest
+    when: ansible_os_family == 'RedHat'
+
+  - name: Create PHP info file
+    copy:
+        content: <?php phpinfo(); ?>
+        dest: /var/www/html/info.php
 
   - name: Enable and start httpd
     service:
@@ -30,7 +37,8 @@
   - name: Test Apache 
     command: httpd -v
     register: apache_version
-
+    when: ansible_os_family == 'RedHat'
+    
   - name: Output apache apache_version
     debug:
       msg: "Apache version is {{ apache_version.stdout }}"
