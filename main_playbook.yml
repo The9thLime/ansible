@@ -9,6 +9,7 @@
       update_cache: true
       update_only: true
 
+
 - hosts: web_servers
   become: true
   tasks:
@@ -40,3 +41,27 @@
   - name: Output apache apache_version
     debug:
       msg: "Apache version is {{ apache_version.stdout }}"
+
+
+- hosts: db_servers
+  become: true
+  tasks:
+
+  - name: Install MySQL
+    package:
+      name: mysql-server
+      state: latest
+
+  - name: Enable and start MySQL
+    service:
+      name: mysqld
+      enabled: true
+      state: started
+
+  - name: Test MySQL
+    command: mysql --version
+    register: mysql_version
+
+  - name: Output MySQL version
+    debug:
+      msg: "MySQL version is {{ mysql_version.stdout }}"
